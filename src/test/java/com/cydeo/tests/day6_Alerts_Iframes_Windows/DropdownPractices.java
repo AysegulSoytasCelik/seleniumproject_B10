@@ -11,6 +11,9 @@ import org.testng.annotations.Test;
 
 import java.util.concurrent.TimeUnit;
 
+
+
+
 public class DropdownPractices {
 
     public WebDriver driver;
@@ -30,7 +33,7 @@ public class DropdownPractices {
     }
 
     @Test
-    public void dropdown_task5() throws InterruptedException {
+    public void dropdown_task5(){
 
 
         //we located the dropdown and it is ready to use
@@ -38,18 +41,19 @@ public class DropdownPractices {
 
         //3. Select Illinois
 
-        Thread.sleep(2000);
+
         stateDropdown.selectByVisibleText("Illinois");
 
         //4. Select Virginia
 
-        Thread.sleep(2000);
+
         stateDropdown.selectByValue("VA");
 
 
         //5. Select California
 
-        Thread.sleep(2000);
+
+
         stateDropdown.selectByIndex(5);
 
 
@@ -61,6 +65,8 @@ public class DropdownPractices {
         Assert.assertEquals(actualOptionText, expectedOptionText);
 
     }
+
+
 
 
     @Test
