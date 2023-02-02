@@ -1,64 +1,50 @@
 package com.cydeo.tests.day8_WebTablesCont_Properties_ConfigurationReader;
 
 import com.cydeo.utilities.ConfigurationReader;
-import com.cydeo.utilities.WebDriverFactory;
+import com.cydeo.utilities.Driver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
-import java.util.concurrent.TimeUnit;
 
 public class T4_Config_Practice {
 
-
-    public WebDriver driver;
-
-    @BeforeMethod
-    public void setupMethod() {
-        //we are getting the browserType dynamically from our configuration.properties
-        String browserType= ConfigurationReader.getProperty("browser");
-        driver = WebDriverFactory.getDriver(browserType);
-
-
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-
-        // 1. Go to: https://www.google.com
-        driver.get("https://www.google.com");
-
-        // cookies accept all button
-        WebElement acceptAllButton = driver.findElement(By.xpath("//div[.='Accept all']"));
-        acceptAllButton.click();
-
-    }
-
+//    public WebDriver driver;
+//
+//    @BeforeMethod
+//    public void setupMethod(){
+//
+//        //We are getting the browserType dynamically from our configuration.properties file
+//        String browserType = ConfigurationReader.getProperty("browser");
+//        driver = WebDriverFactory.getDriver(browserType);
+//
+//        driver.manage().window().maximize();
+//        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+//
+//    }
 
     @Test
-    public void google_search_test() {
+    public void google_search_test(){
+        //Driver.getDriver() --> driver
+
+        Driver.getDriver().get("https://www.google.com");
+
 
         //3- Write “apple” in search box
-        WebElement googleSearchBox = driver.findElement(By.xpath("//input[@name='q']"));
+        WebElement googleSearchBox = Driver.getDriver().findElement(By.xpath("//input[@name='q']"));
 
-        googleSearchBox.sendKeys("apple" + Keys.ENTER);
+        googleSearchBox.sendKeys(ConfigurationReader.getProperty("searchValue") + Keys.ENTER);
 
         //4- Verify title:
         //Expected: apple - Google Search
+        String expectedTitle = ConfigurationReader.getProperty("searchValue")+" - Google Search";
+        String actualTitle = Driver.getDriver().getTitle();
 
-        String expectedTitle="apple - Google Search";
-        String  actualTitle = driver.getTitle();
-
-        Assert.assertEquals(actualTitle,expectedTitle);
-
-
+        Assert.assertEquals(actualTitle, expectedTitle);
     }
 
-
-}
-//TC #4: Google search
+}//TC #4: Google search
 //1- Open a chrome browser
 //2- Go to: https://google.com
 //3- Write “apple” in search box
